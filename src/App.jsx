@@ -14,7 +14,6 @@ export const App = () => {
             <Tab>Todos</Tab>
             <Tab>Photos</Tab>
           </TabList>
-
           <TabPanel>
             <Todos />
           </TabPanel>
