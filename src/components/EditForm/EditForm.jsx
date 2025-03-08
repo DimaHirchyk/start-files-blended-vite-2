@@ -2,23 +2,25 @@ import { RiSaveLine } from 'react-icons/ri';
 import { MdOutlineCancel } from 'react-icons/md';
 import style from './EditForm.module.css';
 
-const EditForm = ({ cancel, edit, defaultValue }) => {
+const EditForm = ({ cancelUpdate, updateTodo, defaultValue }) => {
+  console.log(defaultValue);
+
   const onHandleSubmit = e => {
     e.preventDefault();
-    const form = e.target;
-    const newText = form.text.value.trim();
 
-    if (newText) {
-      edit(newText);
-    }
+    const value = e.target.elements.text.value.trim();
+
+    if (!value) return;
+    updateTodo({ ...defaultValue, text: value });
   };
+
   return (
-    <form className={style.form} onClick={cancel} onSubmit={onHandleSubmit}>
+    <form className={style.form} onSubmit={onHandleSubmit}>
       <button className={style.submitButton} type="submit">
         <RiSaveLine color="green" size="16px" />
       </button>
 
-      <button className={style.editButton} type="button" onClick={cancel}>
+      <button className={style.editButton} type="button" onClick={cancelUpdate}>
         <MdOutlineCancel color="red" size="16px" />
       </button>
 
@@ -27,7 +29,7 @@ const EditForm = ({ cancel, edit, defaultValue }) => {
         placeholder="What do you want to write?"
         name="text"
         required
-        defaultValue={defaultValue}
+        defaultValue={defaultValue.text}
         autoFocus
       />
     </form>

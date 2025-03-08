@@ -2,7 +2,9 @@ import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
 import Text from '../Text/Text';
 import style from './TodoListItem.module.css';
 
-const TodoListItem = ({ item, onDelete, index, edit }) => {
+const TodoListItem = ({ item, onDelete, index, edit, id }) => {
+  const handlClick = () => edit(id);
+
   return (
     <div className={style.box}>
       <Text textAlign="center" marginBottom="20">
@@ -17,7 +19,7 @@ const TodoListItem = ({ item, onDelete, index, edit }) => {
         <RiDeleteBinLine size={24} />
       </button>
 
-      <button className={style.editButton} type="button" onClick={edit}>
+      <button className={style.editButton} type="button" onClick={handlClick}>
         <RiEdit2Line size={24} />
       </button>
     </div>

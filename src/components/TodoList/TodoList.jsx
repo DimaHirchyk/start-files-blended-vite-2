@@ -13,6 +13,7 @@ const TodoList = ({ array, onDelete, edit }) => {
               item={arr}
               onDelete={onDelete}
               edit={edit}
+              id={arr.id}
             />
           </GridItem>
         ))}

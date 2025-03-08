@@ -19,6 +19,7 @@ const Todos = () => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [currentTodo, setCurrentTodo] = useState({});
+  console.log(currentTodo);
 
   useEffect(() => {
     window.localStorage.setItem('todo', JSON.stringify(todos));
@@ -31,30 +32,33 @@ const Todos = () => {
   const deleteTodo = id =>
     setTodos(prev => prev.filter(todo => todo.id !== id));
 
-  const handleEditTodo = todo => {
-    setIsEditing(true);
-    setCurrentTodo(todo);
+  const handleEditTodo = id => {
+    const currTodo = todos.find(todo => todo.id === id);
+
+    setCurrentTodo(currTodo);
+    setIsEditing(prev => !prev);
   };
 
   const cancelUpdate = () => {
-    setIsEditing(false);
+    setIsEditing(prev => !prev);
     setCurrentTodo({});
   };
 
-  const updateTodo = (id, newText) => {
+  const updateTodo = changeTodo => {
     setTodos(prev =>
-      prev.map(todo => (todo.id === id ? { ...todo, text: newText } : todo))
+      prev.map(todo => (todo.id === changeTodo.id ? changeTodo : todo))
     );
     setIsEditing(false);
     setCurrentTodo({});
   };
+
   return (
     <>
       {isEditing ? (
         <EditForm
-          defaultValue={currentTodo.text}
-          edit={updateTodo}
-          cancel={cancelUpdate}
+          defaultValue={currentTodo}
+          updateTodo={updateTodo}
+          cancelUpdate={cancelUpdate}
         />
       ) : (
         <Form onSubmit={addNewTodo} />
