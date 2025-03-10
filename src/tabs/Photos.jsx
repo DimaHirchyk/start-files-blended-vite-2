@@ -21,11 +21,13 @@ const Photos = () => {
       try {
         const data = await getPhotos(query, page);
         console.log(data);
-        setImages(data);
+        setImages(prev => [...prev, ...data.photos]);
       } catch (error) {
         setError(true);
         console.log(error);
       } finally {
+        setError(false);
+
         setIsLoading(false);
       }
     }
@@ -37,6 +39,9 @@ const Photos = () => {
     setPage(1);
   };
 
+  const onClick = () => {
+    setPage(() => page + 1);
+  };
   return (
     <>
       <Text textAlign="center">Let`s begin search 🔎</Text>
@@ -45,7 +50,7 @@ const Photos = () => {
         <p>Whoops, something went wrong! Please try reloading this page!</p>
       )}
       {isLoading ? <Loader /> : <PhotosGallery images={images} />}
-      <Button />
+      {images.length !== 0 && <Button onClick={onClick}>Load more </Button>}
     </>
   );
 };
