@@ -19,7 +19,6 @@ const Todos = () => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [currentTodo, setCurrentTodo] = useState({});
-  console.log(currentTodo);
 
   useEffect(() => {
     window.localStorage.setItem('todo', JSON.stringify(todos));
